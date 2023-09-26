@@ -20,32 +20,40 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding.btLogin.setOnClickListener {
+
+            // Obter os valores inseridos nos campos de nome e telefone
             val nome = binding.editNome.text.toString()
-            val senha = binding.editSenha.text.toString()
+            val telefono = binding.editSenha.text.toString()
+
+            // Realizar verificações nos dados inseridos
              when{
                 nome.isEmpty() ->{
                      mensagem(it,"Por favor, añade un nombre válido!")
-                 }senha.isEmpty() -> {
-                     mensagem(it,"Por favor, ponga su numero de telefone!!")
-                 }senha.length <=9 ->{
+                 }telefono.isEmpty() -> {
+                     mensagem(it,"Por favor, ponga su numero de telefono!!")
+                 }telefono.length <=8 ->{
                     mensagem(it, "Minimo 9 numeros")
                  }else -> {
-                     navegarParaHome(nome)
+
+                 // Navegar para a tela Home enviando nome e telefone como extras
+                     navegarParaHome(nome,telefono)
                  }
             }
         }
 
     }
+    // Função para exibir uma mensagem de Snackbar com fundo vermelho
     private fun mensagem(view: View, mensagem:String){
         val snackbar = Snackbar.make(view, mensagem, Snackbar.LENGTH_SHORT)
         snackbar.setBackgroundTint(Color.parseColor("#FF0000"))
         snackbar.setTextColor(Color.parseColor("#FFFFFF"))
         snackbar.show()
     }
-
-    private fun navegarParaHome(nome: String){
+    // Função para navegar para a tela Home e enviar nome e telefone como extras
+    private fun navegarParaHome(nome: String, telefono: String){
         val intent = Intent(this, Home::class.java)
         intent.putExtra("nome",nome)
+        intent.putExtra("telefono", telefono)
         startActivity(intent)
     }
 }
